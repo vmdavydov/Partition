@@ -61,8 +61,8 @@ public class PartServiceImpl implements PartService {
             }
             int cCount = input.get(i).length() - input.get(i).trim().length();
             int pCount = currentNode.getName().length() - currentNode.getName().trim().length();
+            PartNode node = new PartNode(input.get(i));
             if (cCount > pCount) {
-                PartNode node = new PartNode(input.get(i));
                 node.setIndex(1);
                 node.setParent(currentNode);
                 node.setAIndex(node.getParent().getAIndex() == null ? String.valueOf(node.getIndex()) : node.getParent().getAIndex() + "." + node.getIndex());
@@ -71,7 +71,6 @@ public class PartServiceImpl implements PartService {
                 currentNode = node;
                 headers.add(node.getName());
             } else if (cCount == pCount) {
-                PartNode node = new PartNode(input.get(i));
                 node.setIndex(currentNode.getIndex() + 1);
                 currentNode.getParent().addChild(node);
                 node.setParent(currentNode.getParent());
@@ -80,7 +79,6 @@ public class PartServiceImpl implements PartService {
                 currentNode = node;
                 headers.add(node.getName());
             } else {
-                PartNode node = new PartNode(input.get(i));
                 node.setIndex(currentNode.getParent().getIndex() + 1);
                 currentNode.getParent().getParent().addChild(node);
                 node.setParent(currentNode.getParent().getParent());

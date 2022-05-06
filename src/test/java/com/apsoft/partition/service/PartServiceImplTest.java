@@ -2,13 +2,10 @@ package com.apsoft.partition.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PartServiceImplTest {
 
@@ -24,7 +21,7 @@ class PartServiceImplTest {
     }
 
     @Test
-    public void testShouldThrowException() throws IOException {
+    public void testShouldThrowException() {
         assertThrows(UnsupportedOperationException.class, () -> partService.parseFile(file));
     }
 }
