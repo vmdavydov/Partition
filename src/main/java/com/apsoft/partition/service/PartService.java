@@ -14,4 +14,6 @@ public interface PartService {
     String printResult(PartNode root, List<String> headers);
 
     List<String> getHeaders();
+
+    void deleteTemp(String path);
 }

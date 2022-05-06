@@ -9,5 +9,4 @@ public class PartitionApplication {
     public static void main(String[] args) {
         SpringApplication.run(PartitionApplication.class, args);
     }
-
 }

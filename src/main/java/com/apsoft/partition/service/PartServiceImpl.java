@@ -115,11 +115,15 @@ public class PartServiceImpl implements PartService {
         return headers;
     }
 
+    @Override
+    public void deleteTemp(String path) {
+        for (File myFile : new File(path).listFiles())
+            if (myFile.isFile()) myFile.delete();
+    }
+
     public void recursiveDeep(PartNode root) {
         for (int i = 0; i < root.getChildren().size(); i++) {
             PartNode node = root.getChildren().get(i);
-            System.out.println(node.getName());
-            System.out.println();
             body.add(node.getName());
             if (!node.getChildren().isEmpty()) {
                 recursiveDeep(node);
