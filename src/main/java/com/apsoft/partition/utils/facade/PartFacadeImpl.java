@@ -1,7 +1,6 @@
-package com.apsoft.partition.utils.impl;
+package com.apsoft.partition.utils.facade;
 
 import com.apsoft.partition.service.PartService;
-import com.apsoft.partition.utils.PartFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

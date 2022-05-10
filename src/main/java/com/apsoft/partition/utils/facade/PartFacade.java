@@ -1,4 +1,4 @@
-package com.apsoft.partition.utils;
+package com.apsoft.partition.utils.facade;
 
 import com.apsoft.partition.service.PartService;
 import org.springframework.web.multipart.MultipartFile;

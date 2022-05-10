@@ -1,7 +1,7 @@
 package com.apsoft.partition.controller;
 
 import com.apsoft.partition.service.PartService;
-import com.apsoft.partition.utils.PartFacade;
+import com.apsoft.partition.utils.facade.PartFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

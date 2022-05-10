@@ -1,5 +1,6 @@
 package com.apsoft.partition.service;
 
+import com.apsoft.partition.exceptions.NotSupportedFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -22,6 +23,6 @@ class PartServiceImplTest {
 
     @Test
     public void testShouldThrowException() {
-        assertThrows(UnsupportedOperationException.class, () -> partService.parseFile(file,"dir"));
+        assertThrows(NotSupportedFormatException.class, () -> partService.parseFile(file,"dir"));
     }
 }

@@ -1,5 +1,6 @@
 package com.apsoft.partition.service;
 
+import com.apsoft.partition.exceptions.WrongNestingSectionException;
 import com.apsoft.partition.utils.Validation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,16 +40,25 @@ public class PartServiceImpl implements PartService {
         StringBuilder header = new StringBuilder();
         StringBuilder body = new StringBuilder();
         lines.stream().filter(s -> s.startsWith("#")).forEach(s -> header.append(getValue(s)));
-        secVal.clear();
-        keySection.clear();
+        header.append("\n");
+        clearDataSec();
         lines.forEach(s -> body.append(getValue(s)));
         return String.valueOf(header.append(body));
     }
 
+    private void clearDataSec() {
+        secVal.clear();
+        keySection.clear();
+    }
+
     @Override
     public void deleteTemp(String path) {
-        for (File myFile : new File(path).listFiles())
-            if (myFile.isFile()) myFile.delete();
+        for (File myFile : new File(path).listFiles()) {
+            if (myFile.isFile()) {
+                myFile.delete();
+            }
+        }
+        clearDataSec();
     }
 
     private static String diff(String s) {
@@ -83,7 +93,7 @@ public class PartServiceImpl implements PartService {
             value = getIndex(section - 1) + ".";
         }
         return value + Optional.ofNullable(secVal.get(section))
-                .orElseThrow(UnsupportedOperationException::new);
+                .orElseThrow(WrongNestingSectionException::new);
     }
 
     private static void setupKeySection(int section) {
