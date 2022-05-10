@@ -22,6 +22,6 @@ class PartServiceImplTest {
 
     @Test
     public void testShouldThrowException() {
-        assertThrows(UnsupportedOperationException.class, () -> partService.parseFile(file));
+        assertThrows(UnsupportedOperationException.class, () -> partService.parseFile(file,"dir"));
     }
 }

@@ -1,6 +1,5 @@
 package com.apsoft.partition.utils.impl;
 
-import com.apsoft.partition.model.PartNode;
 import com.apsoft.partition.service.PartService;
 import com.apsoft.partition.utils.PartFacade;
 import lombok.RequiredArgsConstructor;
@@ -19,17 +18,13 @@ public class PartFacadeImpl implements PartFacade {
     private String path;
 
     public String getResult(MultipartFile file, PartService service) {
-        PartNode root = null;
+        String result = "";
         try {
-            root = service.reformat(service.parseFile(file));
+            result = service.printResult(service.parseFile(file, path));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String result = service.printResult(root, service.getHeaders());
         service.deleteTemp(path);
         return result;
     }
-
-
-
 }

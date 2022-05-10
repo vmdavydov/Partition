@@ -21,7 +21,7 @@ public class IntegrationTests {
     @Test
     public void shouldUploadFile() throws Exception {
         MultipartFile multipartFile = new MockMultipartFile("test.txt", new FileInputStream("src/test/java/resources/test.txt"));
-        List<String> list = service.parseFile(multipartFile);
+        List<String> list = service.parseFile(multipartFile, "dir");
         assertThat(!list.isEmpty());
     }
 

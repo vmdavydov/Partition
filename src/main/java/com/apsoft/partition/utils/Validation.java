@@ -1,5 +1,6 @@
 package com.apsoft.partition.utils;
 
+import com.apsoft.partition.exceptions.NotSupportedFormatException;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Validation {
@@ -10,7 +11,7 @@ public class Validation {
         if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
             String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
             if (!extension.equals("txt")) {
-                throw new UnsupportedOperationException("Не поддерживаемый тип файла");
+                throw new NotSupportedFormatException();
             }
         }
 

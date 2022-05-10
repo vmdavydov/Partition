@@ -1,5 +1,7 @@
 package com.apsoft.partition.controller;
 
+import com.apsoft.partition.exceptions.NotSupportedFormatException;
+import com.apsoft.partition.exceptions.WrongNestingSectionException;
 import com.apsoft.partition.model.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,8 +17,13 @@ public class FileUploadExceptionAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(new Message("Upload file too large."));
     }
 
-    @ExceptionHandler(UnsupportedOperationException.class)
-    public ResponseEntity<Message> handleUnsupportedOperationException(UnsupportedOperationException e){
+    @ExceptionHandler(NotSupportedFormatException.class)
+    public ResponseEntity<Message> handleUnsupportedOperationException(NotSupportedFormatException e){
         return ResponseEntity.badRequest().body(new Message("Upload file not .txt format."));
+    }
+
+    @ExceptionHandler(WrongNestingSectionException.class)
+    public ResponseEntity<Message> handleWrongNestingSectionException(WrongNestingSectionException e) {
+        return ResponseEntity.badRequest().body(new Message("Wrong nesting of sections in file."));
     }
 }
