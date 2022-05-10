@@ -25,10 +25,12 @@ public class PartServiceImpl implements PartService {
 
     @Override
     public List<String> parseFile(MultipartFile file, String dir) throws IOException {
+        clearDataSec();
         Validation.getFileExtension(file);
         String uuidName = UUID.randomUUID().toString();
         String resultName = uuidName + "." + file.getOriginalFilename();
         String pathName = dir + "/" + resultName;
+        new File(dir).mkdir();
         file.transferTo(new File(pathName));
         List<String> lines = Files.readAllLines(new File(pathName).toPath(), StandardCharsets.UTF_8);
         log.info("Parse file: {}", file.getOriginalFilename());
@@ -53,15 +55,17 @@ public class PartServiceImpl implements PartService {
 
     @Override
     public void deleteTemp(String path) {
-        for (File myFile : new File(path).listFiles()) {
+        File dir = new File(path);
+        for (File myFile : Objects.requireNonNull(dir.listFiles())) {
             if (myFile.isFile()) {
                 myFile.delete();
             }
         }
+        dir.delete();
         clearDataSec();
     }
 
-    private static String diff(String s) {
+    private String diff(String s) {
         OptionalInt first = IntStream.range(0, s.length()).filter(i -> s.charAt(i) != ' ').findFirst();
         if (first.isPresent()) {
             return " ".repeat(Math.max(0, first.getAsInt()) - 1);
@@ -69,7 +73,7 @@ public class PartServiceImpl implements PartService {
         throw new NullPointerException();
     }
 
-    public static String getValue(String sharp) {
+    public String getValue(String sharp) {
         if (sharp.startsWith("#")) {
             temp = sharp.replace("#", " ");
             return recursiveGetSection(sharp, 0);
@@ -78,7 +82,7 @@ public class PartServiceImpl implements PartService {
         }
     }
 
-    private static String recursiveGetSection(String sharp, int section) {
+    private String recursiveGetSection(String sharp, int section) {
         if (sharp.startsWith("#")) {
             return recursiveGetSection(sharp.substring(1), section + 1);
         } else {
@@ -87,7 +91,7 @@ public class PartServiceImpl implements PartService {
         }
     }
 
-    private static String getIndex(int section) {
+    private String getIndex(int section) {
         String value = "";
         if (section > 1) {
             value = getIndex(section - 1) + ".";
@@ -96,7 +100,7 @@ public class PartServiceImpl implements PartService {
                 .orElseThrow(WrongNestingSectionException::new);
     }
 
-    private static void setupKeySection(int section) {
+    private void setupKeySection(int section) {
         secVal.merge(section, 1, Integer::sum);
         if (keySection.contains(section)) {
             keySection.forEach(key -> {
